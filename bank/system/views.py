@@ -147,3 +147,6 @@ def Sign_up(request):
             messages.success(request, f'Invalid Password')
             return redirect('sign')
     return render(request, 'sigin.html')
+
+def transaction(request):
+    return render(request, 'transaction.html')

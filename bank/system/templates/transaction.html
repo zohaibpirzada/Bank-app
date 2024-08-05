@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Money Transfer Transactions</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f5f5f5;
+        }
+        .navbar {
+            background-color: #4caf50;
+        }
+        .navbar-brand {
+            color: white;
+        }
+        .card-header {
+            background-color: #4caf50;
+            color: white;
+        }
+        .transaction-table th, .transaction-table td {
+            vertical-align: middle;
+        }
+        .btn-primary {
+            background-color: #4caf50;
+            border-color: #4caf50;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="#">EasyPaisa</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Dashboard</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Transactions</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Settings</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card">
+                    <div class="card-header">
+                        Transaction Search
+                    </div>
+                    <div class="card-body">
+                        <form class="form-inline">
+                            <div class="form-group mb-2">
+                                <label for="startDate" class="sr-only">Start Date</label>
+                                <input type="date" class="form-control" id="startDate" placeholder="Start Date">
+                            </div>
+                            <div class="form-group mx-sm-3 mb-2">
+                                <label for="endDate" class="sr-only">End Date</label>
+                                <input type="date" class="form-control" id="endDate" placeholder="End Date">
+                            </div>
+                            <button type="submit" class="btn btn-primary mb-2">Search</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        Recent Transactions
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped transaction-table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Date</th>
+                                        <th scope="col">Description</th>
+                                        <th scope="col">Amount</th>
+                                        <th scope="col">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>2024-07-28</td>
+                                        <td>Transfer to John Doe</td>
+                                        <td>-PKR 500.00</td>
+                                        <td><span class="badge badge-success">Completed</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>2024-07-26</td>
+                                        <td>Received from Jane Smith</td>
+                                        <td>+PKR 750.00</td>
+                                        <td><span class="badge badge-success">Completed</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>2024-07-24</td>
+                                        <td>Transfer to Mary Johnson</td>
+                                        <td>-PKR 1,200.00</td>
+                                        <td><span class="badge badge-warning">Pending</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>2024-07-22</td>
+                                        <td>Transfer to Robert Brown</td>
+                                        <td>-PKR 300.00</td>
+                                        <td><span class="badge badge-danger">Failed</span></td>
+                                    </tr>
+                                    <!-- Add more transactions as needed -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
