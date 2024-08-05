@@ -149,4 +149,5 @@ def Sign_up(request):
     return render(request, 'sigin.html')
 
 def transaction(request):
-    return render(request, 'transaction.html')
+    user_transaction = Transactions.objects.all().order_by('-date')
+    return render(request, 'transaction.html', {'transaction' : user_transaction})
