@@ -1,0 +1,72 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block content %}
+<div class="container d-flex py-3 justify-content-center ">
+    <div class="card col-md-6 px-2 py-3">
+        <div class="card-header text-center">
+            <b>Conform</b>
+        </div>
+        <div class="card-body">
+            <div class="row border px-2 py-3">
+                <div class="text-center col-md-4 ">
+                    <img src="{{sender.image.url}}" alt="{{sender.user.username}}" width="80px"
+                        style="object-position: 0% 0%;" height="80px" class="rounded-circle object-fit-cover"><br>
+                    <!-- <span>{{sender.user.username|capfirst}}</span> -->
+                </div>
+                <div class="col-md d-flex justify-content-center align-items-center">
+                    <i class="bi bi-arrow-right fs-1 text-success"></i>
+                </div>
+                <div class="text-center col-md-4">
+                    <img src="{{reciver.image.url}}" alt="{{reciver.user.username}}" width="80px"
+                        style="object-position: 0% 0%;" height="80px" class="rounded-circle object-fit-cover"><br>
+                    <!-- <span>{{reciver.user.username|capfirst}}</span> -->
+                </div>
+            </div>
+            <form method="post" action="{% url 'transfer' %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <div class="row justify-content-center">
+                        <div class="col-md-3">
+                            <label class="form-text m-0 p-0">Sender Name</label>
+                            <span class="form-text fs-4"><b>{{sender.user.username|capfirst}}</b></span>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-text m-0 p-0">Reciver Name</label>
+                            <span class="form-text fs-4"><b>{{reciver.user.username|capfirst}}</b></span>
+                        </div>
+                    </div>
+                    <input type="hidden" class="form-control" name="sender" value="{{reciver.user.username}}"
+                        id="recipient" placeholder="Enter recipient">
+                </div>
+                <div class="form-group text-center">
+                    <label class="form-text m-0 p-0">Amount</label>
+                    <span class="form-text"><b
+                            class=" fs-4">{{send_amount}}</b><br>available<small>({{sender.balance}})</small></span>
+                    <input type="hidden" step=0.01 class="form-control" value="{{send_amount}}" id="amount"
+                        name="amount" placeholder="Enter amount">
+                        <!-- {{form.as_p}} -->
+                </div>
+                <div class="my-2 row gap-2">
+                    <a href='{% url "index" %}' class="btn col-md m-0 btn-outline-primary">Back</a>
+                    <button class="btn col-md btn-success m-0 btn-block" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal">Transfer</button>
+                </div>
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header justify-content-center">
+                                <h1 class="modal-title text-center fs-5" id="exampleModalLabel">Tranfer Process</h1>
+                            </div>
+                            <div class="modal-body d-flex align-items-center justify-content-center">
+                                <dotlottie-player src="https://lottie.host/34befb64-a9ec-4ee8-bbd6-d9cc0138fb7d/9L2aaxLPff.json" background="transparent" speed="1" style="width: 300px; height: 300px" direction="1" playMode="normal" loop autoplay></dotlottie-player>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

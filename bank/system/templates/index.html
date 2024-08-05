@@ -1,0 +1,84 @@
+{% extends 'base/base.html' %}
+{% block content %}
+
+   
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="card balance-card">
+                    <div class="card-body text-center">
+                        {{request.user.profile.phone_number}}
+                        <h5 class="card-title">Account Balance</h5>
+                        <h2 class="card-text">PKR {{request.user.profile.balance}}</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-header">
+                        Quick Transfer
+                    </div>
+                    <div class="card-body">
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="recipient">Recipient</label>
+                                <input type="text" required class="form-control" name="sender" id="recipient" placeholder="Enter recipient">
+                            </div>
+                            <div class="form-group">
+                                <label for="amount">Amount</label>
+                                <input type="number" required step=0.01 class="form-control" id="amount" name="amount" placeholder="Enter amount">
+                            </div>
+                            <button type="submit" class="btn btn-success btn-block">Transfer</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        Recent Transactions
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped transaction-table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Date</th>
+                                        <th scope="col">Description</th>
+                                        <th scope="col">Amount</th>
+                                        <th scope="col">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for trans in transaction %}
+                                    {% if trans.sender == request.user %}
+                                    <tr>
+                                        <td>{{trans.date}}</td>
+                                        <td>Transfer to {{trans.reciver}}</td>
+                                        <td>-PKR {{trans.amount}}</td>
+                                        <td><span class="badge badge-success">Completed</span></td>
+                                    </tr>
+                                    {% elif  trans.reciver == request.user %}
+                                    <tr>
+                                        <td>{{trans.date}}</td>
+                                        <td>Received from {{trans.sender}}</td>
+                                        <td>+PKR {{trans.amount}}</td>
+                                        <td><span class="badge badge-success">Completed</span></td>
+                                    </tr>
+                                    {% endif %}
+                                    {% empty %}
+                                    <tr class="card-body">
+                                        <td>No Transactions Yet</td>
+                                    </tr>
+                                    {% endfor %}
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
