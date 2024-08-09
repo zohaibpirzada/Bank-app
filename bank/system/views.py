@@ -150,4 +150,8 @@ def Sign_up(request):
 
 def transaction(request):
     user_transaction = Transactions.objects.all().order_by('-date')
+    if request.method == 'Get':
+        start = request.Get.get('start')
+        end = request.Get.get('end')
+        user_transaction = Transactions.objects.filter(date__range=[[start].value(), [end].value()]).order_by('-date')
     return render(request, 'transaction.html', {'transaction' : user_transaction})
