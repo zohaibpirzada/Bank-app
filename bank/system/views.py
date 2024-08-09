@@ -149,9 +149,11 @@ def Sign_up(request):
     return render(request, 'sigin.html')
 
 def transaction(request):
-    user_transaction = Transactions.objects.all().order_by('-date')
+    # user_transaction = Transactions.objects.order_by('-date')
+    user_transaction = Transactions.objects.filter(date__range=['2024-08-5','2024-08-10']).order_by('-date')
+
     if request.method == 'Get':
         start = request.Get.get('start')
         end = request.Get.get('end')
-        user_transaction = Transactions.objects.filter(date__range=[[start].value(), [end].value()]).order_by('-date')
+        # user_transaction = Transactions.objects.filter(date__range=['04-07-2024','04-07-2024']).order_by('-date')
     return render(request, 'transaction.html', {'transaction' : user_transaction})

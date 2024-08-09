@@ -11,11 +11,11 @@
                     <form class="form-inline">
                         <div class="form-group mb-2">
                             <label for="startDate" class="sr-only">Start Date</label>
-                            <input type="date" class="form-control" id="startDate" name="start" placeholder="Start Date">
+                            <input type="date" class="form-control" id="startDate" name="start" >
                         </div>
                         <div class="form-group mx-sm-3 mb-2">
                             <label for="endDate" class="sr-only">End Date</label>
-                            <input type="date" class="form-control" id="endDate" name="end" placeholder="End Date">
+                            <input type="date" class="form-control" id="endDate" name="end">
                         </div>
                         <button type="submit" class="btn btn-primary mb-2">Search</button>
                     </form>
@@ -42,7 +42,7 @@
                                 {% for trans in transaction %}
                                 {% if trans.sender == request.user %}
                                 <tr>
-                                    <td>{{trans.date}}</td>
+                                    <td>{{trans.date|date:'d-m-Y'}}</td>
                                     <td>Transfer to {{trans.reciver}}</td>
                                     <td>-PKR {{trans.amount}}</td>
                                     <td><span class="badge badge-success">Completed</span></td>
