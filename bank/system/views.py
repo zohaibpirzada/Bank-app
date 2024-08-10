@@ -155,6 +155,4 @@ def transaction(request):
         end = request.GET.get('end')
         if start and end != None: 
             user_transaction = Transactions.objects.filter(date__range=[start,end]).order_by('-date')
-        else:
-            messages.success(request, 'Something Wrong')
     return render(request, 'transaction.html', {'transaction' : user_transaction, 'start' : start, 'end':end})
