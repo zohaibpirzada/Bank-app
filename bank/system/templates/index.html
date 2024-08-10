@@ -23,11 +23,11 @@
                             {% csrf_token %}
                             <div class="form-group">
                                 <label for="recipient">Recipient</label>
-                                <input type="text" required class="form-control" name="sender" id="recipient" placeholder="Enter recipient">
+                                <input type="text" required class="form-control" name="sender"  id="recipient" placeholder="Enter recipient">
                             </div>
                             <div class="form-group">
                                 <label for="amount">Amount</label>
-                                <input type="number" required step=0.01 class="form-control" id="amount" name="amount" placeholder="Enter amount">
+                                <input type="number" required step=0.01 min="10"  class="form-control" id="amount" name="amount" placeholder="Enter amount">
                             </div>
                             <button type="submit" class="btn btn-success btn-block">Transfer</button>
                         </form>
