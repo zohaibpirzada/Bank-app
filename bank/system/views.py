@@ -7,12 +7,17 @@ from django import forms
 from django.forms import ModelForm
 from time import sleep
 from django.contrib.auth import login, logout, authenticate
+import phonenumbers
 
 class transaction_form(ModelForm):
     class Meta:
         model = Transactions
         fields = ['sender','reciver', "amount"]
 
+class UserRegisterForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ['username','email']
 
 def index(request):
     if request.user.is_authenticated:
@@ -156,3 +161,9 @@ def transaction(request):
         if start and end != None: 
             user_transaction = Transactions.objects.filter(date__range=[start,end]).order_by('-date')
     return render(request, 'transaction.html', {'transaction' : user_transaction, 'start' : start, 'end':end})
+
+def setting_page(request):
+    current_user = profile.objects.get(id=request.user.id)
+    phone_number = f"+92 {current_user.phone_number[1:4]} {current_user.phone_number[4:]}"
+    context = {"phone_numher" : phone_number}
+    return render(request, 'setting.html', context)

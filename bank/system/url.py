@@ -9,5 +9,6 @@ urlpatterns = [
     path("logout/", views.user_logout, name='logout'),
     path("sign_up/", views.Sign_up, name='sign'),
     path("transaction/", views.transaction, name='transaction'),
+    path("setting/", views.setting_page, name='setting'),
     path("transfer/conform/<str:sender>-to-<str:reciver>-<int:send_amount>", views.conform, name='conform'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
