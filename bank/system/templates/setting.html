@@ -8,15 +8,15 @@
                     Personal Information
                 </div>
                 <div class="card-body">
-                    {{form}}
-                    <form>
+                    <form method="post" action="{% url 'update' %}">
+                        {% csrf_token %}
                         <div class="form-group">
                             <label for="fullName">Full Name</label>
-                            <input type="text" class="form-control" id="fullName" value="Zohaib">
+                            <input type="text" class="form-control" name="username" id="fullName" value="{{request.user.username}}" placeholder="username">
                         </div>
                         <div class="form-group">
                             <label for="email">Email address</label>
-                            <input type="email" class="form-control" id="email" value="johndoe@example.com">
+                            <input type="email" class="form-control" id="email" name="email" value="{{request.user.email}}" placeholder="Email">
                         </div>
                         <div class="form-group">
                             <label for="phone">Phone Number</label>
@@ -33,20 +33,21 @@
                     Change Password
                 </div>
                 <div class="card-body">
-                    <form>
+                    <form method="post" action="{% url 'passupdate' %}">
+                        {% csrf_token %}
                         <div class="form-group">
                             <label for="currentPassword">Current Password</label>
-                            <input type="password" class="form-control" id="currentPassword"
+                            <input type="password" class="form-control" name="currentPassword" id="currentPassword"
                                 placeholder="Enter current password">
                         </div>
                         <div class="form-group">
                             <label for="newPassword">New Password</label>
-                            <input type="password" class="form-control" id="newPassword"
+                            <input type="password" class="form-control" name="newPassword" id="newPassword"
                                 placeholder="Enter new password">
                         </div>
                         <div class="form-group">
                             <label for="confirmNewPassword">Confirm New Password</label>
-                            <input type="password" class="form-control" id="confirmNewPassword"
+                            <input type="password" class="form-control" name="confirmNewPassword" id="confirmNewPassword"
                                 placeholder="Confirm new password">
                         </div>
                         <button type="submit" class="btn btn-primary">Change Password</button>

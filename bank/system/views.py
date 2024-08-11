@@ -8,13 +8,14 @@ from django.forms import ModelForm
 from time import sleep
 from django.contrib.auth import login, logout, authenticate
 import phonenumbers
+from django.contrib.auth.decorators import login_required
 
 class transaction_form(ModelForm):
     class Meta:
         model = Transactions
         fields = ['sender','reciver', "amount"]
 
-class UserRegisterForm(UserCreationForm):
+class UserForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username','email']
@@ -162,8 +163,43 @@ def transaction(request):
             user_transaction = Transactions.objects.filter(date__range=[start,end]).order_by('-date')
     return render(request, 'transaction.html', {'transaction' : user_transaction, 'start' : start, 'end':end})
 
+@login_required
+def userupdate(request):
+    # print("User Update")
+    return redirect('setting')
+@login_required
+def userpassupdate(request):
+    # print("User password Update")
+    if request.method == 'POST':
+        current_password = request.POST['currentPassword']
+        newPassword = request.POST['newPassword']
+        confirmNewPassword = request.POST['confirmNewPassword']
+        current_user = User.objects.get(id=request.user.id)
+        if current_password and newPassword and confirmNewPassword != None:
+            if current_user.check_password(current_password):
+                if newPassword == confirmNewPassword:
+                    if newPassword == current_password:
+                        messages.success(request, "You don't set the same password")
+                    else:
+                        current_user.set_password(newPassword)
+                        current_user.save()
+                        login_user = authenticate(username=current_user.username, password=newPassword)
+                        if login_user != None:
+                            login(request, login_user)
+                        messages.success(request, "Your Password Successfuly Updated")
+                else:
+                    messages.success(request, "Password don't Match")
+            else:
+                messages.success(request, 'Wrong Password')
+        else:
+            messages.success(request, 'Something Wrong')
+    return redirect('setting')
+
 def setting_page(request):
-    current_user = profile.objects.get(id=request.user.id)
-    phone_number = f"+92 {current_user.phone_number[1:4]} {current_user.phone_number[4:]}"
-    context = {"phone_numher" : phone_number}
-    return render(request, 'setting.html', context)
+    if request.user.is_authenticated:
+        current_user = profile.objects.get(id=request.user.id)  
+        phone_number = f"+92 {current_user.phone_number[1:4]} {current_user.phone_number[4:]}"
+        context = {"phone_numher" : phone_number}
+        return render(request, 'setting.html', context)
+    else:
+        return redirect('login')
