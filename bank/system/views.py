@@ -122,37 +122,41 @@ def user_logout(request):
     return redirect('login')
 
 def Sign_up(request):
-    if request.method == 'POST':
-        username = request.POST['username']
-        email = request.POST['email']
-        password = request.POST['password']
-        phone = request.POST['phone']
-        confirmPassword = request.POST['confirmPassword']
-        if password == confirmPassword:
-            if User.objects.filter(username=username).exists():
-                messages.success(request, f'this User already exists')
-                return redirect('sign')
-            elif User.objects.filter(email=email).exists():
-                messages.success(request, f'this email already exists')
-                return redirect('sign')
+    if request.user.is_authenticated:
+        messages.success(request, 'Your Are Already Login')
+        return redirect('index')
+    else:
+        if request.method == 'POST':
+            username = request.POST['username']
+            email = request.POST['email']
+            password = request.POST['password']
+            phone = request.POST['phone']
+            confirmPassword = request.POST['confirmPassword']
+            if password == confirmPassword:
+                if User.objects.filter(username=username).exists():
+                    messages.success(request, f'this User already exists')
+                    return redirect('sign')
+                elif User.objects.filter(email=email).exists():
+                    messages.success(request, f'this email already exists')
+                    return redirect('sign')
+                else:
+                    User.objects.create_user(username=username, password=password,email=email).save()
+                    user = authenticate(request, username=username, password=password)
+                    if user != None:
+                        login(request, user)
+                        if profile.objects.filter(phone_number=phone).exists():
+                            messages.success(request, f'this Number already exists')
+                            return redirect('sign')
+                        else:
+                            number = request.user.profile
+                            number.phone_number = phone
+                            number.save()
+                        messages.success(request, f'{username} was Successfully Create!! Welcome')
+                        return redirect('index')
             else:
-                User.objects.create_user(username=username, password=password,email=email).save()
-                user = authenticate(request, username=username, password=password)
-                if user != None:
-                    login(request, user)
-                    if profile.objects.filter(phone_number=phone).exists():
-                        messages.success(request, f'this Number already exists')
-                        return redirect('sign')
-                    else:
-                        number = request.user.profile
-                        number.phone_number = phone
-                        number.save()
-                    messages.success(request, f'{username} was Successfully Create!! Welcome')
-                    return redirect('index')
-        else:
-            messages.success(request, f'Invalid Password')
-            return redirect('sign')
-    return render(request, 'sigin.html')
+                messages.success(request, f'Invalid Password')
+                return redirect('sign')
+        return render(request, 'sigin.html')
 
 def transaction(request):
     user_transaction = Transactions.objects.order_by('-date')
@@ -165,7 +169,7 @@ def transaction(request):
 
 @login_required
 def userupdate(request):
-    # print("User Update")
+    
     return redirect('setting')
 @login_required
 def userpassupdate(request):
@@ -197,7 +201,7 @@ def userpassupdate(request):
 
 def setting_page(request):
     if request.user.is_authenticated:
-        current_user = profile.objects.get(id=request.user.id)  
+        current_user = profile.objects.get(user__id=request.user.id)  
         phone_number = f"+92 {current_user.phone_number[1:4]} {current_user.phone_number[4:]}"
         context = {"phone_numher" : phone_number}
         return render(request, 'setting.html', context)
