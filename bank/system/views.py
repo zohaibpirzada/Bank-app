@@ -161,18 +161,17 @@ def Sign_up(request):
 def transaction(request):
     user_transaction = Transactions.objects.order_by('-date')
     if request.method == 'GET':
-        start = request.GET.get('start')
-        end = request.GET.get('end')
-        if start and end != None: 
-            user_transaction = Transactions.objects.filter(date__range=[start,end]).order_by('-date')
-    return render(request, 'transaction.html', {'transaction' : user_transaction, 'start' : start, 'end':end})
+        start = request.GET.get('search')
+        # end = request.GET.get('end')
+        if start != None: 
+            user_transaction = Transactions.objects.filter(reciver__user="zohaib").order_by('-date')
+    return render(request, 'transaction.html', {'transaction' : user_transaction, 'start' : start})
 
 @login_required
 def userupdate(request):
     return redirect('setting')
 @login_required
 def userpassupdate(request):
-    # print("User password Update")
     if request.method == 'POST':
         current_password = request.POST['currentPassword']
         newPassword = request.POST['newPassword']

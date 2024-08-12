@@ -54,14 +54,14 @@
                                     {% for trans in transaction %}
                                     {% if trans.sender == request.user %}
                                     <tr>
-                                        <td>{{trans.date}}</td>
+                                        <td>{{trans.date|date:'Y M D'}}</td>
                                         <td>Transfer to {{trans.reciver}}</td>
                                         <td class="text-danger">-PKR {{trans.amount}}</td>
                                         <td><span class="badge badge-success">Completed</span></td>
                                     </tr>
                                     {% elif  trans.reciver == request.user %}
                                     <tr>
-                                        <td>{{trans.date}}</td>
+                                        <td>{{trans.date|date:'Y M D'}}</td>
                                         <td>Received from {{trans.sender}}</td>
                                         <td class="text-success">+PKR {{trans.amount}}</td>
                                         <td><span class="badge badge-success">Completed</span></td>
