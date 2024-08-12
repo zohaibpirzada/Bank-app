@@ -72,9 +72,11 @@
                                         <td>No Transactions Yet</td>
                                     </tr>
                                     {% endfor %}
-
                                 </tbody>
                             </table>
+                            {% if transaction.count >= 3 %}
+                            <a href="{% url 'transaction' %}" class="btn btn-success">View More</a>
+                            {% endif  %}
                         </div>
                     </div>
                 </div>

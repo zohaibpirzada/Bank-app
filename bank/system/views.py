@@ -44,7 +44,7 @@ def index(request):
                 else:
                     messages.success(request, 'this user not exist :-)')
                     return redirect('index')
-        user_transaction = Transactions.objects.all().order_by('-date')
+        user_transaction = Transactions.objects.all().order_by('-date')[:3]
         return render(request, 'index.html', {'transaction' : user_transaction})
     else:
         return redirect('login')
@@ -169,7 +169,6 @@ def transaction(request):
 
 @login_required
 def userupdate(request):
-    
     return redirect('setting')
 @login_required
 def userpassupdate(request):

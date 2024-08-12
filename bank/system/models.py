@@ -17,7 +17,7 @@ def createprofile(sender, instance, created, **kwarys):
         user.save()
 
 class Transactions(models.Model):
-    date = models.DateField(auto_now_add=True)
+    date = models.DateTimeField(auto_now_add=True)
     sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name="sender")
     reciver = models.ForeignKey(User, on_delete=models.CASCADE, related_name="reciver")
     amount = models.FloatField(blank=True, null=False)
