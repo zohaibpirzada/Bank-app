@@ -23,3 +23,4 @@ class Transactions(models.Model):
     amount = models.FloatField(blank=True, null=False)
     def __str__(self) -> str:
         return f"Sender {self.sender.username} -- reciver {self.reciver.username} -- amount {self.amount} -- date {self.date}"
+    

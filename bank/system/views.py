@@ -159,13 +159,20 @@ def Sign_up(request):
         return render(request, 'sigin.html')
 
 def transaction(request):
-    user_transaction = Transactions.objects.order_by('-date')
-    if request.method == 'GET':
-        start = request.GET.get('search')
-        # end = request.GET.get('end')
-        if start != None: 
-            user_transaction = Transactions.objects.filter(reciver__user="zohaib").order_by('-date')
-    return render(request, 'transaction.html', {'transaction' : user_transaction, 'start' : start})
+    if request.user.is_authenticated:
+        user_transaction = Transactions.objects.order_by('-date')
+        send_percentage = 0
+        recive_percentage = 0
+        for trans in user_transaction:
+            if trans.sender == request.user :
+                send_percentage = (trans.amount / trans.sender.profile.balance * 100)
+            elif trans.reciver == request.user:
+                recive_percentage = (trans.amount / 1000 * 100)
+        print(f"Send percentage : {send_percentage}")
+        print(f"Recive percentage : {recive_percentage}")
+        return render(request, 'transaction.html', {'transaction' : user_transaction})
+    else:
+        return redirect('login')
 
 @login_required
 def userupdate(request):

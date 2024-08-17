@@ -5,24 +5,10 @@
         <div class="col-12 mb-4">
             <div class="card">
                 <div class="card-header">
-                    Transaction Search
+                    Transaction Percentage 
                 </div>
                 <div class="card-body">
-                    <form class="form-inline">
-                        <!-- <div class="form-group mb-2">
-                            <label for="startDate" class="sr-only">Start Date</label>
-                            <input type="date" class="form-control" required value="{{start}}" id="startDate" name="start" >
-                        </div>
-                        <div class="form-group mx-sm-3 mb-2">
-                            <label for="endDate" class="sr-only">End Date</label>
-                            <input type="date" class="form-control" required id="endDate" value="{{end}}" name="end">
-                        </div> -->
-                        <div class="form-group mx-sm-3 mb-2">
-                            <label for="user" class="sr-only">Search</label>
-                            <input type="search" name="search" class="form-control" placeholder="search here.." id="user">
-                        </div>
-                        <button type="submit" class="btn btn-primary mb-2">Search</button>
-                    </form>
+                    
                 </div>
             </div>
         </div>
@@ -46,14 +32,14 @@
                                 {% for trans in transaction %}
                                 {% if trans.sender == request.user %}
                                 <tr>
-                                    <td>{{trans.date}}</td>
+                                    <td>{{trans.date|date:'d-m-Y'}}</td>
                                     <td>Transfer to {{trans.reciver}}</td>
                                     <td class="text-danger">-PKR {{trans.amount}}</td>
                                     <td><span class="badge badge-success">Completed</span></td>
                                 </tr>
                                 {% elif trans.reciver == request.user %}
                                 <tr>
-                                    <td>{{trans.date}}</td>
+                                    <td>{{trans.date|date:'d-m-Y'}}</td>
                                     <td>Received from {{trans.sender}}</td>
                                     <td class="text-success">+PKR {{trans.amount}}</td>
                                     <td><span class="badge badge-success">Completed</span></td>
